@@ -4,5 +4,5 @@
  - It displays the time and date in a 12h format then Year
  - displaying of am(Sun)/pm(Moon) and blinking ":"
  - displaying day of week upside the display
- - displaying second right side of the display
+ - displaying second right side the display
  - Refer to https://discord.gg/h8ZQkpgWBv for more details
