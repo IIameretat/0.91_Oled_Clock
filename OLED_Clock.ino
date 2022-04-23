@@ -82,25 +82,30 @@ void setup() {
     }
   }
 
-  int  w = ((tm.Day + (2.6 * (tm.Month)) - (0.2)) - (2*19) + 22 + (22/4) + (20/4));
-  int  mod = w/7;
+  int w = ((tm.Day + (2.6 * (tm.Month)) - (0.2)) - (2*19) + 22 + (22/4) + (20/4));
+  int mod = w/7;
   int dy = (w - (mod * 7));
 
   Serial.print (" Day: ");
-  Serial.println (dy);
+  Serial.println (dy);  
   Serial.print (" Mod: ");
-  Serial.println (mod);
-  Serial.print (" w: ");
+  Serial.println (mod);  
+  Serial.print (" W: ");
   Serial.println (w);
-  Serial.print (" Hour: ");
+  Serial.print ("\n\n");
+  
+  Serial.print (" Time: ");
   Serial.print (tm.Hour);
+  Serial.print (":");
   Serial.print (tm.Minute);
+  Serial.print (":");
   Serial.println (tm.Second);
-  Serial.print (" Day: ");
-  Serial.println (tm.Day);
-  Serial.print (" Month: ");
+  
+  Serial.print (" Date: ");
+  Serial.print (tm.Day);
+  Serial.print (", ");
   Serial.print (tm.Month);
-  Serial.print (" , 2022");
+  Serial.print (", 2022");
 }
 
 void loop() {
@@ -112,29 +117,19 @@ void loop() {
   display.setCursor(0,8);
   //ZeroH();                  
   ampm(tm.Hour);
-  
-    if(x==0) {                       //if x=0 we don't display the ":"
-      display.print(" ");
-      //display.fillCircle(43, 15, 2, WHITE);
-    }
-    
-    if(x==1) {                       //if x=1 we display it, so for every 1s we display or not the ":"
-      display.print(":");
-      //display.fillCircle(43, 22, 2, WHITE);
-    }
-
+  SecArm();
+      
   display.setTextSize(3);
-  ZeroM();
   display.print(tm.Minute);
   display.setTextSize(1);
   display.setCursor(55,0);
 
   if(a==true)
   //display.print(" AM");
-  display.drawBitmap(99, 0, image_data_Sun, 20, 9, 1);
+  display.drawBitmap(99, 0, image_Sun, 20, 9, 1);
   if(a==false)
   //display.print(" PM");
-  display.drawBitmap(99, 0, image_data_Moon, 20, 9, 1);
+  display.drawBitmap(99, 0, image_Moon, 20, 9, 1);
   
   int  w = ((tm.Day + (2.6 * (tm.Month)) - (0.2)) - (2*19) + 22 + (22/4) + (20/4));
   int  mod = w/7;
@@ -147,12 +142,13 @@ void loop() {
   for (int j = 0; j <= 3; j++) {                    // Sec Section
   display.drawPixel(127, (j*15)+1, WHITE);
   }
+  
   display.drawLine(127, 32-(tm.Second/2), 127, 32-(tm.Second/2)-4, WHITE);         // Second Arm
   
-  //display.print(dayName[dy]);
   display.setTextSize(1);
-  display.drawLine((dy*12)+3, 0, (dy*13)+5, 0, WHITE);
-  display.setCursor((dy*11)+4,0);
+  display.drawLine((dy*10)+2, 0, (dy*10)+10, 0, WHITE);
+  
+  //display.setCursor((dy*11)+4,0);
   //display.print(dayName[dy]);
   //display.print(dy);
 
@@ -162,11 +158,9 @@ void loop() {
   display.setCursor(96,23);
   display.print(monthName[tm.Month-1]);
   
-  //display.print(tm.Month);
-  //display.print('/'); 
-  display.setCursor(99,26);
+  /*display.setCursor(99,26);
   display.setTextSize(1);
-  //display.print(tmYearToCalendar(tm.Year));
+  display.print(tmYearToCalendar(tm.Year));*/
   dimdisplay();
   ClockRing();
   display.display();
@@ -220,6 +214,31 @@ void dimdisplay(){
   else {
     display.dim(false);
   }
+}
+
+void SecArm () {
+  if (tm.Hour == 0 or tm.Hour > 9) {
+     if(x==0) {                       //if x=0 we don't display the ":"
+      display.print(" ");
+      display.fillCircle(43, 15, 2, WHITE);
+    }
+    
+     if(x==1) {                       //if x=1 we display it, so for every 1s we display or not the ":"
+      display.print(" ");
+      display.fillCircle(43, 21, 2, WHITE);
+     }
+    }
+    else {
+      if(x==0) {                       //if x=0 we don't display the ":"
+      display.print(" ");
+      display.fillCircle(38, 15, 2, WHITE);
+    }
+    
+      if(x==1) {                       //if x=1 we display it, so for every 1s we display or not the ":"
+      display.print(" ");
+      display.fillCircle(38, 21, 2, WHITE);
+     }
+    }
 }
 
 void Buzzer () {
