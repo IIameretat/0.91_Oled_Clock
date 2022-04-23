@@ -220,23 +220,23 @@ void SecArm () {
   if (tm.Hour == 0 or tm.Hour > 9) {
      if(x==0) {                       //if x=0 we don't display the ":"
       display.print(" ");
-      display.fillCircle(43, 15, 2, WHITE);
+      display.fillCircle(43, 16, 2, WHITE);
     }
     
      if(x==1) {                       //if x=1 we display it, so for every 1s we display or not the ":"
       display.print(" ");
-      display.fillCircle(43, 21, 2, WHITE);
+      display.fillCircle(43, 22, 2, WHITE);
      }
     }
     else {
       if(x==0) {                       //if x=0 we don't display the ":"
       display.print(" ");
-      display.fillCircle(29, 15, 2, WHITE);
+      display.fillCircle(26, 16, 2, WHITE);
     }
     
       if(x==1) {                       //if x=1 we display it, so for every 1s we display or not the ":"
       display.print(" ");
-      display.fillCircle(29, 21, 2, WHITE);
+      display.fillCircle(26, 22, 2, WHITE);
      }
     }
 }
