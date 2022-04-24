@@ -32,55 +32,17 @@ int  x = 0;
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); //Declaring the display name (display)
 tmElements_t tm;
-
-bool getTime(const char *str)
-{
-  int Hour, Min, Sec;
-
-  if (sscanf(str, "%d:%d:%d", &Hour, &Min, &Sec) != 3) return false;
-  tm.Hour = Hour;
-  tm.Minute = Min;
-  tm.Second = Sec;
-  return true;
-}
-
-bool getDate(const char *str)
-{
-  char Month[12];
-  int Day, Year;
-  uint8_t monthIndex;
-
-  if (sscanf(str, "%s %d %d", Month, &Day, &Year) != 3) return false;
-  for (monthIndex = 0; monthIndex < 12; monthIndex++) {
-    if (strcmp(Month, monthName[monthIndex]) == 0) break;
-  }
-  if (monthIndex >= 12) return false;
-  tm.Day = Day;
-  tm.Month = monthIndex + 1;
-  tm.Year = CalendarYrToTm(Year);
-  return true;
-}
-
+  
 void setup() {
+  RTC.read(tm);
+  
   Wire.begin();
-  Serial.begin(115200);
+  Serial.begin(9600);
   delay(1000);
-    
+  
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C); //Start the OLED display
   display.clearDisplay();
   display.display();
-
-  bool parse=false;
-  bool config=false;
-
-  // get the date and time the compiler was run
-  if (getDate(__DATE__) && getTime(__TIME__)) {
-    parse = true;
-    // and configure the RTC with this info
-    if (RTC.write(tm)) {
-      config = true;
-    }
-  }
 
   int w = ((tm.Day + (2.6 * (tm.Month)) - (0.2)) - (2*19) + 22 + (22/4) + (20/4));
   int mod = w/7;
@@ -94,7 +56,7 @@ void setup() {
   Serial.println (w);
   Serial.print ("\n\n");
   
-  Serial.print (" Time: ");
+  Serial.print (" RTC Time: ");
   Serial.print (tm.Hour);
   Serial.print (":");
   Serial.print (tm.Minute);
@@ -105,7 +67,11 @@ void setup() {
   Serial.print (tm.Day);
   Serial.print (", ");
   Serial.print (tm.Month);
-  Serial.print (", 2022");
+  Serial.println (", 2022 \n");
+  
+  Serial.print (" System Time: ");
+  Serial.println (__TIME__);
+  Serial.println (" - Notice that its the time when you upload the code !!!\n");
 }
 
 void loop() {
