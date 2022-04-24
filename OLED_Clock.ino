@@ -118,6 +118,7 @@ void loop() {
   //ZeroH();                  
   ampm(tm.Hour);
   SecArm();
+  ZeroM();
       
   display.setTextSize(3);
   display.print(tm.Minute);
