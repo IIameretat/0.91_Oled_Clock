@@ -71,7 +71,7 @@ void setup() {
   
   Serial.print (" System Time: ");
   Serial.println (__TIME__);
-  Serial.println (" - Notice that its the time when you upload the code !!!\n");
+  Serial.println ("- Notice that its the time when you upload the code !!!\n");
 }
 
 void loop() {
@@ -184,7 +184,7 @@ void dimdisplay(){
 }
 
 void SecArm () {
-  if (tm.Hour == 0 or tm.Hour > 9) {
+  if (tm.Hour == 0 or tm.Hour > 21 && tm.Hour <= 23 or tm.Hour > 9 && tm.Hour <= 12) {
      if(x==0) {                       //if x=0 we don't display the ":"
       display.print(" ");
       display.fillCircle(43, 16, 2, WHITE);
